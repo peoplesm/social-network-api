@@ -1,0 +1,31 @@
+{
+  "name": "social-network-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server",
+    "start": "node server.js",
+    "seed": "node utils/seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peoplesm/social-network-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peoplesm/social-network-api/issues"
+  },
+  "homepage": "https://github.com/peoplesm/social-network-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}

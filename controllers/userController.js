@@ -5,10 +5,10 @@ async function getUsers(req, res) {
   try {
     const users = await User.find().populate('thoughts').populate('friends');
 
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }
 
@@ -19,11 +19,11 @@ async function getSingleUser(req, res) {
       .populate('thoughts')
       .populate('friends');
     if (!user) {
-      res.status(404).json({ message: 'No user with that ID' });
+      return res.status(404).json({ message: 'No user with that ID' });
     }
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }
 
@@ -31,10 +31,29 @@ async function getSingleUser(req, res) {
 async function createUser(req, res) {
   try {
     const user = await User.create(req.body);
-    res.status(200).json({ message: 'Successfully created new user!' });
+    return res.status(200).json({ message: 'Successfully created new user!' });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }
 
-module.exports = { getUsers, getSingleUser, createUser };
+// Delete a user
+async function deleteUser(req, res) {
+  try {
+    const user = await User.findByIdAndDelete(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' });
+    }
+    return res.status(200).json({ message: 'Successfully deleted user!' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+module.exports = {
+  getUsers,
+  getSingleUser,
+  createUser,
+  // updateUser,
+  deleteUser,
+};

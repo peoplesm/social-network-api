@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
+
 // Get all users
 async function getUsers(req, res) {
   try {

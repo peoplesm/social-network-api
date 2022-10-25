@@ -13,11 +13,10 @@ const {
 // Get all users and create new user
 router.route('/').get(getUsers).post(createUser);
 
-//    /api/users/:userId
 // Get/update/delete user by _id
 router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 
-//  /api/users/:userId/friends/:friendId
-router.route('/:userId/friends/:friendId').put(addFriend).delete(deleteFriend);
+// Add and delete friend
+router.route('/:userId/friends/:friendId').post(addFriend).delete(deleteFriend);
 
 module.exports = router;

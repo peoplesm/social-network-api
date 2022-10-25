@@ -37,6 +37,23 @@ async function createUser(req, res) {
   }
 }
 
+// Update a user
+async function updateUser(req, res) {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.userId,
+      { username: req.body.username, email: req.body.email },
+      { runValidators: true, new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' });
+    }
+    return res.status(200).json({ message: 'Successfully updated user!' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 // Delete a user
 async function deleteUser(req, res) {
   try {
@@ -54,6 +71,6 @@ module.exports = {
   getUsers,
   getSingleUser,
   createUser,
-  // updateUser,
+  updateUser,
   deleteUser,
 };

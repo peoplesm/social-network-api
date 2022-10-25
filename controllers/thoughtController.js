@@ -76,10 +76,49 @@ async function deleteThought(req, res) {
   }
 }
 
+async function createReaction(req, res) {
+  try {
+    const thought = await Thought.findByIdAndUpdate(
+      req.params.thoughtId,
+      {
+        $addToSet: {
+          reactions: {
+            reactionBody: req.body.reactionBody,
+            username: req.body.username,
+          },
+        },
+      },
+      { runValidators: true, new: true }
+    );
+    if (!thought) {
+      return res.status(404).json({ message: 'No thought with that ID' });
+    }
+    return res.status(200).json({ message: 'Reaction successfully created' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+async function deleteReaction(req, res) {
+  try {
+    const thought = await Thought.findById(req.params.thoughtId);
+    const reaction = thought.reactions.find(
+      (reaction) => reaction.reactionId == req.params.reactionId
+    );
+    thought.reactions.remove(reaction);
+    thought.save();
+    return res.status(200).json({ message: 'Reaction successfully deleted' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = {
   getThoughts,
   createThought,
   getSingleThought,
   updateThought,
   deleteThought,
+  createReaction,
+  deleteReaction,
 };

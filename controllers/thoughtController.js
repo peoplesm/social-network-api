@@ -24,7 +24,23 @@ async function createThought(req, res) {
   }
 }
 
+// Get thought by ID
+async function getSingleThought(req, res) {
+  try {
+    const thought = await Thought.findOne({ _id: req.params.thoughtId });
+    if (!thought) {
+      return res.status(404).json({ message: 'No thought with that ID' });
+    }
+    return res.status(200).json(thought);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = {
   getThoughts,
   createThought,
+  getSingleThought,
+  //   updateThought,
+  //   deleteThought,
 };

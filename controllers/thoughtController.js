@@ -59,10 +59,27 @@ async function updateThought(req, res) {
   }
 }
 
+// Delete thought by ID
+async function deleteThought(req, res) {
+  try {
+    const thought = await Thought.findByIdAndDelete(req.params.thoughtId);
+    if (!thought) {
+      return res.status(404).json({ message: 'No thought with that ID' });
+    }
+    await User.updateOne(
+      { username: thought.username },
+      { $pull: { thoughts: ObjectId(req.params.thoughtId) } }
+    );
+    return res.status(200).json({ message: 'Thought successfully deleted' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = {
   getThoughts,
   createThought,
   getSingleThought,
   updateThought,
-  //   deleteThought,
+  deleteThought,
 };

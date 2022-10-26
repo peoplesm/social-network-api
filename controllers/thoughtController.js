@@ -76,6 +76,7 @@ async function deleteThought(req, res) {
   }
 }
 
+// Add a reaction to a thought
 async function createReaction(req, res) {
   try {
     const thought = await Thought.findByIdAndUpdate(
@@ -99,6 +100,7 @@ async function createReaction(req, res) {
   }
 }
 
+// Delete a reaction by its ID
 async function deleteReaction(req, res) {
   try {
     const thought = await Thought.findById(req.params.thoughtId);

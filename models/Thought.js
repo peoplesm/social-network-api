@@ -1,5 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
+// Sub schema in the thoughtSchema
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -23,6 +24,8 @@ const reactionSchema = new Schema(
   },
   {
     toJSON: {
+      //Virtuals allow you to pull virtual properties with schema
+      //Getters allow you to get the formatDate fxn an use it in the schema
       virtuals: true,
       getters: true,
     },
@@ -58,10 +61,12 @@ const thoughtSchema = new Schema(
   }
 );
 
+// Format date so more readable format
 function formatDate(createdAt) {
   return createdAt.toLocaleString();
 }
 
+// Virtual property to calculate reaction count
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
 });

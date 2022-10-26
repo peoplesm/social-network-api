@@ -1,3 +1,4 @@
+//Require mongoose to make server queries
 const { connect, connection } = require('mongoose');
 require('dotenv').config();
 
